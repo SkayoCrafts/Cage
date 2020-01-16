@@ -1,0 +1,138 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Cage plugin for Craft CMS 3.x
+ *
+ * Cage general.twig
+ *
+ * @author    Skayo
+ * @copyright Copyright (c) 2019 Skayo
+ * @link      https://skayocrafts.github.io/Cage
+ * @package   Cage
+ * @since     1.0.0
+ */
+#}
+
+{% extends "cage/settings/_layout" %}
+
+{% import "_includes/forms" as forms %}
+{% from "cage/settings/_macro" import configWarning %}
+
+{% block tabContent %}
+	{{ forms.textField({
+		label: "Plugin Name"|t("cage"),
+		instructions: "If you want, you can change the name of this plugin here. This only affects how the plugin is named in the Control Panel."|t("cage"),
+		placeholder: "Cage",
+		id: "pluginName",
+		name: "pluginName",
+		value: settings.pluginName,
+		errors: settings.getErrors("pluginName"),
+		required: true,
+		first: true,
+		size: 50,
+		disabled: "pluginName" in overrides,
+		warning: "pluginName" in overrides ? configWarning("pluginName"),
+	}) }}
+
+	<hr>
+
+	{{ forms.selectField({
+		label: "Age Verification Method"|t("cage"),
+		instructions: "The age verification method used to verify the users age"|t("cage"),
+		id: "ageVerificationMethod",
+		name: "ageVerificationMethod",
+		required: true,
+		options: ageVerificationMethods,
+		value: settings.ageVerificationMethod,
+		errors: settings.getErrors("ageVerificationMethod"),
+		disabled: "ageVerificationMethod" in overrides,
+		warning: "ageVerificationMethod" in overrides ? configWarning("ageVerificationMethod"),
+	}) }}
+
+	{{ forms.textField({
+		type: "number",
+		label: "Default Age"|t("cage"),
+		instructions: "The fallback age which is used if no age was passed to the `\{\% requireAge \%\}` tag"|t("cage"),
+		id: "defaultAge",
+		name: "defaultAge",
+		value: settings.defaultAge,
+		errors: settings.getErrors("defaultAge"),
+		min: 0,
+		required: true,
+		size: 1,
+		disabled: "defaultAge" in overrides,
+		warning: "defaultAge" in overrides ? configWarning("defaultAge"),
+	}) }}
+
+	{{ forms.textField({
+		label: "Age Verification URL Path"|t("cage"),
+		instructions: "The URL path where the age verification should happen and where the user get's redirected to. By default this happens at https://example.com/age-verification<br>Don't use any slashes ('/') here!"|t("cage"),
+		tip: "I'd recommend leaving this as is, if you don't need the '/age-verification' path for something else!"|t("cage"),
+		id: "ageVerificationPath",
+		name: "ageVerificationPath",
+		size: 50,
+		value: settings.ageVerificationPath,
+		errors: settings.getErrors("ageVerificationPath"),
+		disabled: "ageVerificationPath" in overrides,
+		warning: "ageVerificationPath" in overrides ? configWarning("ageVerificationPath"),
+	}) }}
+
+	<hr>
+
+	{{ forms.textField({
+		type: "url",
+		label: "Failure Redirect Link"|t("cage"),
+		instructions: "Link to redirect to if the user fails the age verification.<br>Defaults the failure page which looks like the age verification site but just has some text."|t("cage"),
+		tip: "I'd recommend leaving this field blank if you have one of the age verification methods where there is no leave button!"|t("cage"),
+		placeholder: "https://google.com/",
+		id: "failureRedirectLink",
+		name: "failureRedirectLink",
+		value: settings.failureRedirectLink,
+		errors: settings.getErrors("failureRedirectLink"),
+		disabled: "failureRedirectLink" in overrides,
+		warning: "failureRedirectLink" in overrides ? configWarning("failureRedirectLink"),
+	}) }}
+
+	{{ forms.lightswitchField({
+		label: 'Show "Try Again" Button'|t("cage"),
+		instructions: 'Whether to show a "Try Again" button on the failure page'|t("cage"),
+		id: "showTryAgain",
+		name: "showTryAgain",
+		on: settings.showTryAgain,
+		errors: settings.getErrors("showTryAgain"),
+		disabled: "showTryAgain" in overrides,
+		warning: "showTryAgain" in overrides ? configWarning("showTryAgain"),
+	}) }}
+
+	<hr>
+
+	{{ forms.lightswitchField({
+		label: "Ignore Logged In"|t("cage"),
+		instructions: "Whether to ignore logged in users and let them pass without age verification"|t("cage"),
+		tip: "If you're testing the age verification, don't forget to turn this off!"|t("cage"),
+		id: "ignoreLoggedIn",
+		name: "ignoreLoggedIn",
+		on: settings.ignoreLoggedIn,
+		errors: settings.getErrors("ignoreLoggedIn"),
+		disabled: "ignoreLoggedIn" in overrides,
+		warning: "ignoreLoggedIn" in overrides ? configWarning("ignoreLoggedIn"),
+	}) }}
+
+	{{ forms.textField({
+		type: "number",
+		label: "Days To Remember Visitor"|t("cage"),
+		instructions: "How long to remember the user's age (in Days). Set to 0 to remember it until the browser is closed."|t("cage"),
+		id: "daysRememberVisitor",
+		name: "daysRememberVisitor",
+		min: 0,
+		required: true,
+		size: 1,
+		value: settings.daysRememberVisitor,
+		errors: settings.getErrors("daysRememberVisitor"),
+		disabled: "daysRememberVisitor" in overrides,
+		warning: "daysRememberVisitor" in overrides ? configWarning("daysRememberVisitor"),
+	}) }}
+
+	<hr>
+
+{% endblock %}

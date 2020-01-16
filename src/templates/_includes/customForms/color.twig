@@ -1,0 +1,55 @@
+{% import "_includes/forms" as forms -%}
+
+{% set id = id ?? ('color'~random()) -%}
+{% set containerId = containerId ?? id~'-container' -%}
+{% set selectionLabel = selectionLabel ?? 'Select Asset' -%}
+{% set elements = elements ?? {} -%}
+{% set elementType = elementType ?? {} -%}
+{% set name = name ?? null -%}
+{% set value = value ?? null -%}
+{% set small = small ?? false -%}
+{% set autofocus = (autofocus ?? false) and not craft.app.request.isMobileBrowser(true) -%}
+{% set disabled = disabled ?? false -%}
+
+{% spaceless %}
+	<div id="{{ containerId }}" class="flex color-container"
+			{%- if block('attr') is defined %} {{ block('attr') }}{% endif %}>
+		<div class="color static{% if small %} small{% endif %}">
+			<div class="color-preview"
+					{%- if value %} style="background-color: {{ value }};"{% endif -%}
+			></div>
+		</div>
+		{{ forms.text({
+			id: id,
+			name: name,
+			value: value,
+			size: 25,
+			class: 'color-input',
+			autofocus: autofocus,
+			disabled: disabled
+		}) }}
+	</div>
+{% endspaceless -%}
+
+{% js %}
+$('#{{ containerId|namespaceInputId }} .color-preview').spectrum({
+	color: '{{ value }}',
+	showButtons: true,
+	cancelText: '{{ 'Cancel'|t("app") }}',
+	chooseText: '{{ 'Choose'|t("app") }}',
+	showAlpha: true,
+    clickoutFiresChange: false,
+	preferredFormat: 'rgb',
+	disabled: {{ disabled ? 'true' : 'false' }},
+	change: function(color) {
+		$('#{{ containerId|namespaceInputId }} .color-preview').css('background-color', color.toRgbString());
+		$('#{{ containerId|namespaceInputId }} .color-input').val(color.toRgbString());
+	}
+});
+
+$('#{{ containerId|namespaceInputId }} .color-input').on('input', function() {
+	var newColor = $('#{{ containerId|namespaceInputId }} .color-input').val();
+	$('#{{ containerId|namespaceInputId }} .color-preview').css('background-color', this.value);
+    $('#{{ containerId|namespaceInputId }} .color-preview').spectrum('set', this.value);
+});
+{% endjs -%}

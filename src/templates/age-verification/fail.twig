@@ -1,0 +1,31 @@
+{% extends 'cage/age-verification/_layout' %}
+
+{% from "cage/age-verification/_macro" import monthNameFromNumber %}
+
+{% block itemContent %}
+	{% if settings.logo|length %}
+		<div class="item-logo-container">
+			<img src="{{ craft.assets.id(settings.logo).one().url }}" class="item-logo" alt="Logo" />
+		</div>
+	{% endif %}
+
+	{% if settings.failureMessage|length %}
+		<div class="text item-message">
+			{{ settings.failureMessage|replace({'{age}': requiredAge})|raw|nl2br }}
+		</div>
+	{% endif %}
+
+	{% if settings.failureCaption|length %}
+		<div class="text item-caption">
+			{{ settings.failureCaption|replace({'{age}': requiredAge})|raw|nl2br }}
+		</div>
+	{% endif %}
+
+	{% if settings.showTryAgain %}
+		<div class="item-allow-container">
+			<div class="item-allow-form">
+				<button onclick="event.preventDefault();window.location.href='{{ tryAgainLink }}';" style="margin-top: 0;" class="button item-allow-button-enter-single">{{ settings.tryAgainButtonText|replace({'{age}': requiredAge}) }}</button>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

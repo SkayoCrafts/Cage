@@ -1,0 +1,35 @@
+{%- set class = 'simple-select '~(class is defined ? class : null) %}
+{% set id = id ?? ('simple-select'~random()) -%}
+{% set containerId = containerId ?? id~'-container' -%}
+{%- set options = (options is defined ? options : []) %}
+{%- set value = (value is defined ? value : null) %}
+{% set disabled = disabled ?? false -%}
+
+<div id="{{ containerId }}" class="{{ class }}"
+		{%- if block('attr') is defined %} {{ block('attr') }}{% endif %}>
+	<input class="simple-select-input"
+	       type="hidden" {%- if id is defined %} id="{{ id }}"{% endif %} {%- if name is defined %} name="{{ name }}"{% endif %} value="{{ value~'' }}">
+	<p>
+		{% for key, option in options %}
+			{% set optionLabel = (option.label is defined ? option.label : option) %}
+			{% set optionValue = (option.value is defined ? option.value : key) %}
+			{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+			<a href="#" data-value="{{ optionValue~'' }}" {% if optionDisabled or disabled %} disabled{% endif %}
+			   class="simple-select-btn btn{% if (optionValue~'') is same as (value~'') %} secondary{% endif %}">
+				{{ optionLabel }}
+			</a>
+		{% endfor %}
+	</p>
+</div>
+
+{% js %}
+$('#{{ containerId|namespaceInputId }} .simple-select-btn').click(function (event) {
+	event.preventDefault();
+
+	var newSelection = event.target.dataset.value;
+	$('#{{ containerId|namespaceInputId }} .simple-select-input').val(newSelection);
+	$('#{{ containerId|namespaceInputId }} .simple-select-btn').removeClass('secondary');
+	$(event.target).addClass('secondary');
+	console.log(newSelection);
+});
+{% endjs -%}

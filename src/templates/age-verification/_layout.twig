@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Age Verification</title>
+
+		{% if customCssFile|length %}
+			<link rel="stylesheet" href="{{ customCssFile }}">
+		{% endif %}
+
+		<style type="text/css">
+			body {
+				padding:    20px;
+				font:       400 normal 15px/1.3 -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+				margin:     0;
+				height:     100%;
+				background: #38393a url('data:image/png;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAUAAA/+4AJkFkb2JlAGTAAAAAAQMAFQQDBgoNAAABpgAAAccAAAIDAAACMP/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8IAEQgAFAAUAwERAAIRAQMRAf/EAH8AAAMBAQAAAAAAAAAAAAAAAAIDBAEIAQEAAAAAAAAAAAAAAAAAAAAAEAACAwEAAAAAAAAAAAAAAAAAATARMRARAQAAAAAAAAAAAAAAAAAAADASAQAAAAAAAAAAAAAAAAAAADATAAEEAwEAAAAAAAAAAAAAAAEAEDAx8BGxYf/aAAwDAQACEQMRAAAB7kHhgCzCgnBP/9oACAEBAAEFAhYUjC3x6f/aAAgBAgABBQKH/9oACAEDAAEFAof/2gAIAQICBj8CH//aAAgBAwIGPwIf/9oACAEBAQY/Ah//2gAIAQEDAT8hVTeSJJaFL2a5v//aAAgBAgMBPyGH/9oACAEDAwE/IYf/2gAMAwEAAhEDEQAAEBBJBB//2gAIAQEDAT8QXV1sRKOD6CgsQDcXG//aAAgBAgMBPxCH/9oACAEDAwE/EIf/2Q==');
+			}
+
+			.main {
+				position: relative;
+			}
+
+			.main-container {
+				display:                                               -webkit-flex;
+				display:                                               flex;
+				position:                                              fixed;
+				top:                                                   0;
+				left:                                                  0;
+				bottom:                                                0;
+				right:                                                 0;
+				-webkit-justify-content:                               center;
+				justify-content:                                       center;
+				-webkit-align-items:                                   center;
+				align-items:                                           center;
+				background-position:                                   center;
+				background-size:                                       cover;
+				z-index:                                               10;
+			{% if settings.backgroundImage|length %}
+				background-image: url({{ craft.assets.id(settings.backgroundImage).one().url }});
+			{% endif %}
+			}
+
+			.main-container:after {
+				top:              0;
+				left:             0;
+				right:            0;
+				bottom:           0;
+				content:          '';
+				display:          block;
+				position:         absolute;
+				background-color: transparent;
+				z-index:          1;
+			}
+
+			.main-container::after {
+				background-color: {{ settings.backgroundColor }};
+			}
+
+			.main-inner {
+				width:         100%;
+				max-width:     920px;
+				border-radius: 10px;
+				position:      relative;
+				box-sizing:    border-box;
+				z-index:       2;
+				min-height:    400px;
+				display:       -webkit-flex;
+				display:       flex;
+				margin:        0 20px;
+			}
+
+			.item-container {
+				display:                 -webkit-flex;
+				display:                 flex;
+				-webkit-align-items:     center;
+				align-items:             center;
+				-webkit-justify-content: center;
+				justify-content:         center;
+				width:                   100%;
+				position:                relative;
+				overflow:                hidden;
+			{{ settings.verificationBoxShape == 'rounded' and settings.verificationBoxImage|length ? 'border-radius: 20px;' : '' }}
+			{{ settings.verificationBoxImagePosition == 'left' ? 'flex-direction: row-reverse; -webkit-flex-direction: row-reverse;' : '' }}
+			}
+
+			.item-content {
+				display:                 -webkit-flex;
+				display:                 flex;
+				-webkit-flex-direction:  column;
+				flex-direction:          column;
+				-webkit-justify-content: center;
+				justify-content:         center;
+				-webkit-align-items:     center;
+				-webkit-flex-shrink:     0;
+				flex-shrink:             0;
+				width:                   50%;
+				box-sizing:              border-box;
+				height:                  100%;
+				background-color: {{ settings.verificationBoxBackgroundColor }};
+				align-items: {{ settings.textAlign == 'center' ? 'center' : 'flex-'~(settings.textAlign == 'left' ? 'start' : 'end') }};
+				padding:                 40px;
+			{{ settings.verificationBoxShape == 'rounded' and not settings.verificationBoxImage|length ? 'border-radius: 20px;' : '' }}
+			}
+
+			.item-content > div:first-child {
+				margin-top: 0px !important;
+			}
+
+			.item-logo-container {
+				overflow:                hidden;
+				max-width: {{ settings.logoMaxWidth }}%;
+				display:                 -webkit-flex;
+				display:                 flex;
+				-webkit-justify-content: center;
+				justify-content:         center;
+				-webkit-align-items:     center;
+				align-items:             center;
+				-webkit-flex-shrink:     0;
+				flex-shrink:             0;
+			}
+
+			.item-logo {
+				max-height:          100%;
+				max-width:           100%;
+				margin:              0 auto;
+				-webkit-flex-shrink: 0;
+				flex-shrink:         0;
+			}
+
+			.text {
+				color: {{ settings.textColor }};
+				text-align: {{ settings.textAlign }};
+			}
+
+			.text a {
+				color: {{ settings.textColor }} !important;
+				opacity: 0.95;
+				text-decoration: underline;
+			}
+
+			.text a:hover {
+				opacity: 0.9;
+			}
+
+			.item-message {
+				font-weight: 700;
+				margin-top:  32px;
+				line-height: 1.15;
+				font-size:   29px;
+				max-width:   100%;
+			}
+
+			.item-caption {
+				line-height: 1.25;
+				margin-top:  16px;
+				width:       100%;
+				font-size:   16px;
+			}
+
+			.item-allow-container {
+				display:             -webkit-flex;
+				display:             flex;
+				margin-top:          32px;
+				width:               100%;
+				-webkit-flex-shrink: 0;
+				flex-shrink:         0;
+			}
+
+			.item-allow-form {
+				width: 100%;
+			}
+
+			{% if settings.verificationBoxShape == 'rounded' %}
+			.item-allow-form select, .item-allow-form input, .item-allow-form button {
+				border-radius: 4px;
+			}
+
+			{% endif%}
+
+			.input, .dropdown {
+				color:            {{ settings.formElementTextColor }};
+				background-color: {{ settings.formElementBackgroundColor }};
+				border:           1px solid {{ settings.formElementBorderColor }};
+				font-size:        16px;
+				padding:          16px;
+				outline:          none;
+				box-sizing:       border-box;
+				transition:       0.3s ease all;
+			}
+
+			.input:focus, .dropdown:focus {
+				opacity: 0.8;
+			}
+
+			.input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+				color: {{ settings.formElementPlaceholderColor }};
+				opacity: 1; /* Firefox */
+			}
+
+			.input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				color: {{ settings.formElementPlaceholderColor }};
+			}
+
+			.input::-ms-input-placeholder { /* Microsoft Edge */
+				color: {{ settings.formElementPlaceholderColor }};
+			}
+
+			.item-allow-input-single, .item-allow-dropdown-single {
+				width:       100%;
+				line-height: 18px;
+				text-align:  center;
+			}
+
+			.item-allow-inputs-container, .item-allow-dropdowns-container {
+				display:                 -webkit-flex;
+				display:                 flex;
+				margin:                  0 -10px;
+				-webkit-justify-content: space-between;
+				justify-content:         space-between;
+			}
+
+			.item-allow-input-multi, .item-allow-dropdown-multi {
+				-webkit-flex: 1 1 auto;
+				flex:         1 1 auto;
+				min-width:    0;
+				margin:       0 10px;
+				line-height:  20px;
+			}
+
+			.errors {
+				color: #f00;
+			}
+
+			.button {
+				padding:     12px;
+				outline:     none;
+				cursor:      pointer;
+				margin-top:  {{ settings.ageVerificationMethod == 'BUTTON_ENTER' ? '0px' : '32px' }};
+				font-weight: 700;
+				line-height: 20px;
+				text-align:  center;
+				font-size:   16px;
+			}
+
+			.item-allow-button-enter-single {
+				background-color: {{ settings.enterButtonBackgroundColor }};
+				color:            {{ settings.enterButtonTextColor }};
+				width:            100%;
+				border:           1px solid {{ settings.enterButtonBorderColor }};
+				transition:       0.3s ease opacity;
+
+			}
+
+			.item-allow-button-enter-single:hover {
+				opacity: 0.8;
+			}
+
+			.item-allow-buttons-container {
+				display: -webkit-flex;
+				display: flex;
+				margin:  -10px;
+			}
+
+			.item-allow-button-enter-multi {
+				background-color: {{ settings.enterButtonBackgroundColor }};
+				color:            {{ settings.enterButtonTextColor }};
+				width:            50%;
+				border:           1px solid {{ settings.enterButtonBorderColor }};
+				position:         relative;
+				margin:           10px;
+				display:          block;
+				transition:       0.3s ease opacity;
+			}
+
+			.item-allow-button-leave {
+				background-color: {{ settings.leaveButtonBackgroundColor }};
+				color:            {{ settings.leaveButtonTextColor }};
+				width:            50%;
+				border:           1px solid {{ settings.leaveButtonBorderColor }};
+				position:         relative;
+				margin:           10px;
+				display:          block;
+				transition:       0.3s ease opacity;
+			}
+
+			.item-allow-button-enter-multi:hover, .item-allow-button-leave:hover {
+				opacity: 0.8;
+			}
+
+			.item-additionalInfo {
+				display:     block;
+				margin-top:  20px;
+				line-height: 1.25;
+				width:       100%;
+				font-size:   12px;
+			}
+
+			.item-image {
+				display:             block;
+				width:               50%;
+				height:              100%;
+				-webkit-flex-shrink: 0;
+				flex-shrink:         0;
+			}
+
+			.item-image-container {
+				width:                   100%;
+				display:                 -webkit-flex;
+				display:                 flex;
+				-webkit-justify-content: center;
+				justify-content:         center;
+				-webkit-align-items:     center;
+				align-items:             center;
+				height:                  100%;
+				position:                relative;
+				-webkit-flex-shrink:     0;
+				flex-shrink:             0;
+			}
+
+			.item-image-image {
+			{% if settings.verificationBoxImage|length %} background-image: url({{ craft.assets.id(settings.verificationBoxImage).one().url }});
+			{% endif %} max-width:                                             100%;
+				background-size:                                               cover;
+				background-position:                                           center;
+				height:                                                        100%;
+				position:                                                      absolute;
+				width:                                                         100%;
+				-webkit-flex-shrink:                                           0;
+				flex-shrink:                                                   0;
+			}
+
+			@media (max-width: 768px) {
+				.item-image {
+					display: none;
+				}
+
+				.item-content {
+					width:     100%;
+					max-width: 460px;
+					padding:   40px 20px;
+				}
+			}
+		</style>
+
+	</head>
+	<body>
+
+		<main class="main">
+			<section class="main-container">
+				<div class="main-inner">
+					<div class="item-container">
+						<div class="item-content">
+							{% block itemContent %}
+							{% endblock %}
+						</div>
+
+						{% if settings.verificationBoxImage|length %}
+							<div class="item-image">
+								<div class="item-image-container">
+									<div class="item-image-image"></div>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</section>
+		</main>
+
+		{% block endBody %}
+		{% endblock %}
+
+	</body>
+</html>

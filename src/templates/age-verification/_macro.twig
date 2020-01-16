@@ -1,0 +1,5 @@
+{% macro monthNameFromNumber(monthNumber) %}
+	{# monthNumber will be 00-12. we use that to construct a date string,
+	   convert it to date and then pick the month name out of that #}
+	{{ date('2020-' ~ monthNumber ~ '-01') | date('F') }}
+{% endmacro %}

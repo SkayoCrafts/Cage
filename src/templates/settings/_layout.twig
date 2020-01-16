@@ -1,0 +1,15 @@
+{% requireAdmin %}
+
+{% extends "_layouts/cp" %}
+
+{% block content %}
+
+	{{ actionInput('cage/settings/save-settings') }}
+	{{ hiddenInput('settingsSection', selectedTab) }}
+
+	{% namespace "settings" %}
+		{% block tabContent %}
+		{% endblock %}
+	{% endnamespace %}
+
+{% endblock %}

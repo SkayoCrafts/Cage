@@ -1,0 +1,57 @@
+{
+    "name": "skayocrafts/cage",
+    "description": "An Age-Verification-Gate Plugin for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "cage",
+		"age",
+		"verification",
+		"gate",
+		"restriction",
+		"restrict",
+		"permission",
+		"porn",
+		"adult",
+		"content",
+		"nsfw",
+		"alcohol",
+		"under-age",
+		"minimum",
+		"protection",
+		"protect",
+		"18",
+		"FSK",
+		"16",
+		"21"
+    ],
+    "support": {
+        "docs": "https://github.com/SkayoCrafts/cage/blob/master/README.md",
+        "issues": "https://github.com/SkayoCrafts/cage/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Skayo",
+            "homepage": "https://skayo.github.io"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "skayocrafts\\cage\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Cage",
+        "handle": "cage",
+        "changelogUrl": "https://raw.githubusercontent.com/SkayoCrafts/cage/master/CHANGELOG.md",
+        "class": "skayocrafts\\cage\\Cage"
+    }
+}

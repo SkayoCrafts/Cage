@@ -1,0 +1,23 @@
+{# Inputs #}
+
+{% macro color(config) %}
+	{% include "cage/_includes/customForms/color" with config only %}
+{% endmacro %}
+
+{% macro simpleSelect(config) %}
+	{% include "cage/_includes/customForms/simpleSelect" with config only %}
+{% endmacro %}
+
+{# Fields #}
+
+{% macro colorField(config) %}
+	{% import _self as forms %}
+	{% set input = forms.color(config) %}
+	{% include "_includes/forms/field" with config|merge({ input: input }) only %}
+{% endmacro %}
+
+{% macro simpleSelectField(config) %}
+	{% import _self as forms %}
+	{% set input = forms.simpleSelect(config) %}
+	{% include "_includes/forms/field" with config|merge({ input: input }) only %}
+{% endmacro %}

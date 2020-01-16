@@ -1,0 +1,206 @@
+{% extends 'cage/age-verification/_layout' %}
+
+{% from "cage/age-verification/_macro" import monthNameFromNumber %}
+
+{% block itemContent %}
+	{% if settings.logo|length %}
+	<div class="item-logo-container">
+		<img src="{{ craft.assets.id(settings.logo).one().url }}" class="item-logo" alt="Logo" />
+	</div>
+	{% endif %}
+
+	{% if settings.message|length %}
+		<div class="text item-message">
+			{{ settings.message|replace({'{age}': requiredAge})|raw|nl2br }}
+		</div>
+	{% endif %}
+
+	{% if settings.caption|length %}
+		<div class="text item-caption">
+			{{ settings.caption|replace({'{age}': requiredAge})|raw|nl2br }}
+		</div>
+	{% endif %}
+
+	<div class="item-allow-container">
+		<form action="{{ submitAction }}" method="post" class="item-allow-form">
+			{{ csrfInput() }}
+
+			{% switch settings.ageVerificationMethod %}
+			{% case 'DROPDOWNS_DAY' %}
+				<div class="item-allow-dropdowns-container">
+					<select name="day" class="dropdown item-allow-dropdown-multi">
+						{% if settings.dayPlaceholder|length %}
+							<option disabled selected value="">{{ settings.dayPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for day in 1..31 %}
+							<option value="{{ day }}">{{ '%02d'|format(day) }}</option>
+						{% endfor %}
+					</select>
+					<select name="month" class="dropdown item-allow-dropdown-multi">
+						{% if settings.monthPlaceholder|length %}
+							<option disabled selected value="">{{ settings.monthPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for month in 1..12 %}
+							<option value="{{ month }}">{{ monthNameFromNumber(month) }}</option>
+						{% endfor %}
+					</select>
+					<select name="year" class="dropdown item-allow-dropdown-multi">
+						{% if settings.yearPlaceholder|length %}
+							<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for year in now.year..1900 %}
+							<option value="{{ year }}">{{ year }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+			{% case 'DROPDOWNS_MONTH' %}
+				<div class="item-allow-dropdowns-container">
+					<select name="month" class="dropdown item-allow-dropdown-multi">
+						{% if settings.monthPlaceholder|length %}
+							<option disabled selected value="">{{ settings.monthPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for month in 1..12 %}
+							<option value="{{ month }}">{{ monthNameFromNumber(month) }}</option>
+						{% endfor %}
+					</select>
+					<select name="day" class="dropdown item-allow-dropdown-multi">
+						{% if settings.dayPlaceholder|length %}
+							<option disabled selected value="">{{ settings.dayPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for day in 1..31 %}
+							<option value="{{ day }}">{{ '%02d'|format(day) }}</option>
+						{% endfor %}
+					</select>
+					<select name="year" class="dropdown item-allow-dropdown-multi">
+						{% if settings.yearPlaceholder|length %}
+							<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
+						{% endif %}
+
+						{% for year in now.year..1900 %}
+							<option value="{{ year }}">{{ year }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+			{% case 'DROPDOWN_YEAR' %}
+				<select name="year" class="dropdown item-allow-dropdown-single">
+					{% if settings.yearPlaceholder|length %}
+						<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
+					{% endif %}
+
+					{% for year in now.year..1900 %}
+						<option value="{{ year }}">{{ year }}</option>
+					{% endfor %}
+				</select>
+
+			{% case 'INPUTS_DAY' %}
+				<div class="item-allow-inputs-container">
+					<input type="number" class="input item-allow-input-multi" name="day" step="1" min="1" max="99" maxlength="2" autofocus
+							{% if settings.dayPlaceholder|length %} placeholder="{{ settings.dayPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+					<input type="number" class="input item-allow-input-multi" name="month" step="1" min="1" max="99" maxlength="2"
+							{% if settings.monthPlaceholder|length %} placeholder="{{ settings.monthPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+					<input type="number" class="input item-allow-input-multi" name="year" step="1" min="0" max="9999" maxlength="4"
+							{% if settings.yearPlaceholder|length %} placeholder="{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+				</div>
+
+			{% case 'INPUTS_MONTH' %}
+				<div class="item-allow-inputs-container">
+					<input type="number" class="input item-allow-input-multi" name="month" step="1" min="1" max="99" maxlength="2" autofocus
+							{% if settings.monthPlaceholder|length %} placeholder="{{ settings.monthPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+					<input type="number" class="input item-allow-input-multi" name="day" step="1" min="1" max="99" maxlength="2"
+							{% if settings.dayPlaceholder|length %} placeholder="{{ settings.dayPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+					<input type="number" class="input item-allow-input-multi" name="year" step="1" min="0" max="9999" maxlength="4"
+							{% if settings.yearPlaceholder|length %} placeholder="{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+				</div>
+
+			{% case 'INPUT_YEAR' %}
+				<input type="number" name="year" class="input item-allow-input-single" step="1" min="0" max="9999" maxlength="4" autofocus
+						{% if settings.yearPlaceholder|length %} placeholder="{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+
+			{% case 'INPUT_AGE' %}
+				<input type="number" name="age" class="input item-allow-input-single" step="1" min="0" max="999" maxlength="3" autofocus
+						{% if settings.agePlaceholder|length %} placeholder="{{ settings.agePlaceholder|replace({'{age}': requiredAge}) }}" {% endif %}>
+
+			{% case 'BUTTONS_ENTER_LEAVE' %}
+				<input type="hidden" name="age" value="{{ requiredAge }}">
+
+			{% case 'BUTTONS_LEAVE_ENTER' %}
+				<input type="hidden" name="age" value="{{ requiredAge }}">
+
+			{% case 'BUTTON_ENTER' %}
+				<input type="hidden" name="age" value="{{ requiredAge }}">
+
+			{% endswitch %}
+
+			{% if errors is defined and errors is not empty %}
+				<ul class="errors">
+					{% for error in errors %}
+						<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+
+			{% if settings.ageVerificationMethod == "BUTTONS_ENTER_LEAVE" %}
+				<div class="item-allow-buttons-container">
+					<button type="submit" class="button item-allow-button-enter-multi">{{ settings.enterButtonText|replace({'{age}': requiredAge}) }}</button>
+					<button onclick="event.preventDefault();window.location.href='{{ failureRedirectLink }}';" class="button item-allow-button-leave">{{ settings.leaveButtonText|replace({'{age}': requiredAge}) }}</button>
+				</div>
+			{% elseif settings.ageVerificationMethod == "BUTTONS_LEAVE_ENTER" %}
+				<div class="item-allow-buttons-container">
+					<button onclick="event.preventDefault();window.location.href='{{ failureRedirectLink }}';" class="button item-allow-button-leave">{{ settings.leaveButtonText|replace({'{age}': requiredAge}) }}</button>
+					<button type="submit" class="button item-allow-button-enter-multi">{{ settings.enterButtonText|replace({'{age}': requiredAge}) }}</button>
+				</div>
+			{% else %}
+				<button type="submit" class="button item-allow-button-enter-single">{{ settings.enterButtonText|replace({'{age}': requiredAge}) }}</button>
+			{% endif %}
+		</form>
+	</div>
+
+	{% if settings.additionalInfo|length %}
+		<div class="text item-additionalInfo">
+			{{ settings.additionalInfo|replace({'{age}': requiredAge})|raw|nl2br }}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block endBody %}
+	<script type="application/javascript">
+		(function () {
+			function ready() {
+				var inputs = document.getElementsByClassName('input');
+
+				for (var i = 0; i < inputs.length; i++) {
+					var input = inputs[i];
+
+					input.onkeyup = function () {
+						if (this.value.length === this.maxLength) {
+							if (this.nextElementSibling) {
+								this.nextElementSibling.focus();
+							} else {
+								document.getElementsByClassName('button')[0].focus();
+							}
+						}
+					};
+
+					input.onkeypress = function (e) {
+						if (this.value.length === this.maxLength || !e.key.match(/\d/)) {
+							return false;
+						}
+					};
+				}
+			}
+
+			if (document.readyState !== 'loading') {
+				ready();
+			} else {
+				document.addEventListener('DOMContentLoaded', ready);
+			}
+		})();
+	</script>
+{% endblock %}

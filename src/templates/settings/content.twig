@@ -1,0 +1,216 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Cage plugin for Craft CMS 3.x
+ *
+ * Cage content.twig
+ *
+ * @author    Skayo
+ * @copyright Copyright (c) 2019 Skayo
+ * @link      https://skayocrafts.github.io/Cage
+ * @package   Cage
+ * @since     1.0.0
+ */
+#}
+
+{% extends "cage/settings/_layout" %}
+
+{% import "_includes/forms" as forms %}
+{% from "cage/settings/_macro" import configWarning %}
+
+{% block tabContent %}
+
+	<h3 class="first" style="margin-bottom: 0">{{ 'Tips'|t("cage") }}:</h3>
+
+	<ul class="errors">
+		<li class="notice">{{ 'Use `{age}` anywhere to automatically replace and insert the required age for the requested page!'|t("cage")|md }}</li>
+		<li class="notice">{{ 'Leave any of these fields empty to disable them! In case of the "Message", "Caption" and "Additional Info" fields, the whole text block will be completely hidden. In case of the placeholders the placeholder will just not be set. Buttons don\'t work.'|t("cage")|md }}</li>
+		<li class="notice">{{ 'In the text areas (the multi-line input fields), HTML is allowed! You can use it for links, bold/italic text, etc.!'|t("cage")|md }}</li>
+		<li class="notice">{{ 'Also, in the text areas (the multi-line input fields), newlines are converted to `<br>` HTML tags!'|t("cage")|md }}</li>
+	</ul>
+
+	<hr>
+
+	{{ forms.textareaField({
+		label: "Message"|t("cage"),
+		instructions: 'The "Message" or "Headline" of the age verification box.'|t("cage"),
+		tip: "You have plenty of options what to put in here. You could: welcome the user, tell the user what kind of content to expect on the site, ask a question like 'Are you over 18?', or even write something like 'Enter only if you are 18'. Your choice."|t("cage"),
+		rows: 3,
+		id: "message",
+		name: "message",
+		value: settings.message,
+		first: true,
+		translatable: true,
+		errors: settings.getErrors("message"),
+		disabled: "message" in overrides,
+		warning: "message" in overrides ? configWarning("message"),
+	}) }}
+
+	{{ forms.textareaField({
+		label: "Caption"|t("cage"),
+		instructions: 'The "Caption" or "Sub-Headline" of the age verification box.'|t("cage"),
+		tip: "I'd recommend, telling the user here what to do in order to verify their age. Or you could ask a question here like 'Are you over 18?'. Your choice."|t("cage"),
+		rows: 3,
+		id: "caption",
+		name: "caption",
+		value: settings.caption,
+		translatable: true,
+		errors: settings.getErrors("caption"),
+		disabled: "caption" in overrides,
+		warning: "caption" in overrides ? configWarning("caption"),
+	}) }}
+
+	{% if settings.ageVerificationMethod not in ['BUTTONS_ENTER_LEAVE', 'BUTTONS_LEAVE_ENTER', 'BUTTON_ENTER'] %}
+		<hr>
+	{% endif %}
+
+	{% if settings.ageVerificationMethod in ['DROPDOWNS_DAY', 'DROPDOWNS_MONTH', 'INPUTS_DAY', 'INPUTS_MONTH'] %}
+		{{ forms.textField({
+			label: "Day Field Placeholder"|t("cage"),
+			instructions: "The placeholder of the input field/drop-down for the user's birth day."|t("cage"),
+			tip: 'For example, you could change this to "Day".'|t("cage"),
+			id: "dayPlaceholder",
+			name: "dayPlaceholder",
+			value: settings.dayPlaceholder,
+			translatable: true,
+			errors: settings.getErrors("dayPlaceholder"),
+			disabled: "dayPlaceholder" in overrides,
+			warning: "dayPlaceholder" in overrides ? configWarning("dayPlaceholder"),
+		}) }}
+
+		{{ forms.textField({
+			label: "Month Field Placeholder"|t("cage"),
+			instructions: "The placeholder of the input field/drop-down for the user's birth month."|t("cage"),
+			tip: 'For example, you could change this to "Month".'|t("cage"),
+			id: "monthPlaceholder",
+			name: "monthPlaceholder",
+			value: settings.monthPlaceholder,
+			translatable: true,
+			errors: settings.getErrors("monthPlaceholder"),
+			disabled: "monthPlaceholder" in overrides,
+			warning: "monthPlaceholder" in overrides ? configWarning("monthPlaceholder"),
+		}) }}
+	{% endif %}
+
+	{% if settings.ageVerificationMethod in ['DROPDOWN_YEAR', 'INPUT_YEAR', 'DROPDOWNS_DAY', 'DROPDOWNS_MONTH', 'INPUTS_DAY', 'INPUTS_MONTH'] %}
+		{{ forms.textField({
+			label: "Year Field Placeholder"|t("cage"),
+			instructions: "The placeholder of the input field/drop-down for the user's birth year."|t("cage"),
+			tip: 'For example, you could change this to "Year".'|t("cage"),
+			id: "yearPlaceholder",
+			name: "yearPlaceholder",
+			value: settings.yearPlaceholder,
+			translatable: true,
+			errors: settings.getErrors("yearPlaceholder"),
+			disabled: "yearPlaceholder" in overrides,
+			warning: "yearPlaceholder" in overrides ? configWarning("yearPlaceholder"),
+		}) }}
+	{% endif %}
+
+	{% if settings.ageVerificationMethod == 'INPUT_AGE' %}
+		{{ forms.textField({
+			label: "Age Field Placeholder"|t("cage"),
+			instructions: "The placeholder of the input field for the user's age."|t("cage"),
+			id: "agePlaceholder",
+			name: "agePlaceholder",
+			value: settings.agePlaceholder,
+			translatable: true,
+			errors: settings.getErrors("agePlaceholder"),
+			disabled: "agePlaceholder" in overrides,
+			warning: "agePlaceholder" in overrides ? configWarning("agePlaceholder"),
+		}) }}
+	{% endif %}
+
+	<hr>
+
+	{{ forms.textField({
+		label: "Enter Button Text"|t("cage"),
+		instructions: 'The text of the button that let\'s the user enter the page.'|t("cage"),
+		tip: 'For example, you could change this to "Submit" or "I am over 18" or "Yes" (if you have a question as caption)'|t("cage"),
+		id: "enterButtonText",
+		name: "enterButtonText",
+		value: settings.enterButtonText,
+		translatable: true,
+		errors: settings.getErrors("enterButtonText"),
+		disabled: "enterButtonText" in overrides,
+		warning: "enterButtonText" in overrides ? configWarning("enterButtonText"),
+	}) }}
+
+	{% if settings.ageVerificationMethod in ['BUTTONS_ENTER_LEAVE', 'BUTTONS_LEAVE_ENTER'] %}
+		{{ forms.textField({
+			label: "Leave Button Text"|t("cage"),
+			instructions: 'The text of the button that let\'s the user leave the page.'|t("cage"),
+			tip: 'For example, you could change this to "I am under 18" or "No" (if you have a question as caption)'|t("cage"),
+			id: "leaveButtonText",
+			name: "leaveButtonText",
+			value: settings.leaveButtonText,
+			translatable: true,
+			errors: settings.getErrors("leaveButtonText"),
+			disabled: "leaveButtonText" in overrides,
+			warning: "leaveButtonText" in overrides ? configWarning("leaveButtonText"),
+		}) }}
+	{% endif %}
+
+	<hr>
+
+	{{ forms.textareaField({
+		label: "Additional Info"|t("cage"),
+		instructions: "Some additional info that is displayed below the age verification form."|t("cage"),
+		tip: "For example, you could add links to your Terms of Use or to your Privacy Policy here.<br>Or you could use it to add a Leave-Site-Link, if you use the 'Enter Button' as Age Verification Method!"|t("cage"),
+		rows: 4,
+		id: "additionalInfo",
+		name: "additionalInfo",
+		value: settings.additionalInfo,
+		translatable: true,
+		errors: settings.getErrors("additionalInfo"),
+		disabled: "additionalInfo" in overrides,
+		warning: "additionalInfo" in overrides ? configWarning("additionalInfo"),
+	}) }}
+
+	<hr>
+
+	{{ forms.textareaField({
+		label: "Failure Page Message"|t("cage"),
+		instructions: 'The "Message" or "Headline" of the failure page.'|t("cage"),
+		tip: 'I\'d recommend, telling the user here what happened.'|t("cage"),
+		rows: 3,
+		id: "failureMessage",
+		name: "failureMessage",
+		value: settings.failureMessage,
+		translatable: true,
+		errors: settings.getErrors("failureMessage"),
+		disabled: "failureMessage" in overrides,
+		warning: "failureMessage" in overrides ? configWarning("failureMessage"),
+	}) }}
+
+	{{ forms.textareaField({
+		label: "Failure Page Caption"|t("cage"),
+		instructions: 'The "Caption" or "Sub-Headline" of the failure page.'|t("cage"),
+		tip: 'I\'d recommend, telling the user here some more details on why he isn\'t allowed to view the page.'|t("cage"),
+		rows: 3,
+		id: "failureCaption",
+		name: "failureCaption",
+		value: settings.failureCaption,
+		translatable: true,
+		errors: settings.getErrors("failureCaption"),
+		disabled: "failureCaption" in overrides,
+		warning: "failureCaption" in overrides ? configWarning("failureCaption"),
+	}) }}
+
+	{% if settings.showTryAgain %}
+		{{ forms.textField({
+			label: '"Try Again" Button Text'|t("cage"),
+			instructions: "The text of the button that let's the user redo the age-verification."|t("cage"),
+			id: "tryAgainButtonText",
+			name: "tryAgainButtonText",
+			value: settings.tryAgainButtonText,
+			translatable: true,
+			errors: settings.getErrors("tryAgainButtonText"),
+			disabled: "tryAgainButtonText" in overrides,
+			warning: "tryAgainButtonText" in overrides ? configWarning("tryAgainButtonText"),
+		}) }}
+	{% endif %}
+
+	<hr>
+
+{% endblock %}

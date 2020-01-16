@@ -1,0 +1,389 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Cage plugin for Craft CMS 3.x
+ *
+ * Cage appearance.twig
+ *
+ * @author    Skayo
+ * @copyright Copyright (c) 2019 Skayo
+ * @link      https://skayocrafts.github.io/Cage
+ * @package   Cage
+ * @since     1.0.0
+ */
+#}
+
+{% extends "cage/settings/_layout" %}
+
+{% import "_includes/forms" as forms %}
+{% import "cage/_includes/customForms" as customForms %}
+{% from "cage/settings/_macro" import configWarning %}
+
+{% do view.registerAssetBundle("skayocrafts\\cage\\assetbundles\\cage\\CageAssetCP") %}
+
+{% block tabContent %}
+
+	<h1>Background</h1>
+
+	{{ customForms.colorField({
+		label: "Background Color"|t("cage"),
+		instructions: "The background color of the age verification page."|t("cage"),
+		tip: "The background color is in front of the background image, so you can use it to add a filter using the alpha value. For example `rgba(0, 0, 0, 0.6)` darkens the image a bit."|t("cage"),
+		id: "backgroundColor",
+		name: "backgroundColor",
+		value: settings.backgroundColor,
+		required: true,
+		errors: settings.getErrors("backgroundColor"),
+		disabled: "backgroundColor" in overrides,
+		warning: "backgroundColor" in overrides ? configWarning("backgroundColor"),
+	}) }}
+
+	{{ forms.elementSelectField({
+		label: "Background Image"|t("cage"),
+		instructions: "The background image of the age verification page."|t("cage"),
+		tip: "The background image takes up the most part of the page, so use a nice image here. I can recommend [unsplash.com](https://unsplash.com)!"|t("cage"),
+		id: "backgroundImage",
+		name: "backgroundImage",
+		elementType: "craft\\elements\\Asset",
+		viewMode: "large",
+		elements: [craft.assets.id(settings.backgroundImage).one()],
+		selectionLabel: "Select an image"|t("cage"),
+		limit: 1,
+		errors: settings.getErrors("backgroundImage"),
+		disabled: "backgroundImage" in overrides,
+		warning: "backgroundImage" in overrides ? configWarning("backgroundImage"),
+	}) }}
+
+	<hr>
+	<h1>Verification Box</h1>
+
+	{{ customForms.simpleSelectField({
+		label: "Verification Box Shape"|t("cage"),
+		instructions: "The shape of the age verification box and it's contents."|t("cage"),
+		tip: "This is completely up to you, but if you use lots of rounded edges on your site, then you should probably also have rounded edges on the age verification page!"|t("cage"),
+		id: "verificationBoxShape",
+		name: "verificationBoxShape",
+		options: {
+			rectangle: "Rectangle",
+			rounded: "Rounded"
+		},
+		required: true,
+		value: settings.verificationBoxShape,
+		errors: settings.getErrors("verificationBoxShape"),
+		disabled: "verificationBoxShape" in overrides,
+		warning: "verificationBoxShape" in overrides ? configWarning("verificationBoxShape"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Verification Box Background Color"|t("cage"),
+		instructions: "The background color of the age verification box."|t("cage"),
+		id: "verificationBoxBackgroundColor",
+		name: "verificationBoxBackgroundColor",
+		value: settings.verificationBoxBackgroundColor,
+		required: true,
+		errors: settings.getErrors("verificationBoxBackgroundColor"),
+		disabled: "verificationBoxBackgroundColor" in overrides,
+		warning: "verificationBoxBackgroundColor" in overrides ? configWarning("verificationBoxBackgroundColor"),
+	}) }}
+
+	{{ forms.elementSelectField({
+		label: "Verification Box Image"|t("cage"),
+		instructions: "The image next to the age verification box. Not shown on mobile!"|t("cage"),
+		tip: "This could be used in all sorts of ways. For example as a second decorating image (in combination with the background image) or even as a place for the logo!"|t("cage"),
+		id: "verificationBoxImage",
+		name: "verificationBoxImage",
+		elementType: "craft\\elements\\Asset",
+		viewMode: "large",
+		elements: [craft.assets.id(settings.verificationBoxImage).one()],
+		selectionLabel: "Select an image"|t("cage"),
+		limit: 1,
+		errors: settings.getErrors("verificationBoxImage"),
+		disabled: "verificationBoxImage" in overrides,
+		warning: "verificationBoxImage" in overrides ? configWarning("verificationBoxImage"),
+	}) }}
+
+	{{ customForms.simpleSelectField({
+		label: "Verification Box Image Position"|t("cage"),
+		instructions: "The position of the image next to the age verification box."|t("cage"),
+		id: "verificationBoxImagePosition",
+		name: "verificationBoxImagePosition",
+		options: {
+			left: "Left",
+			right: "Right"
+		},
+		value: settings.verificationBoxImagePosition,
+		errors: settings.getErrors("verificationBoxImagePosition"),
+		disabled: "verificationBoxImagePosition" in overrides,
+		warning: "verificationBoxImagePosition" in overrides ? configWarning("verificationBoxImagePosition"),
+	}) }}
+
+	<hr>
+	<h1>Logo &amp; Text</h1>
+
+	{{ forms.elementSelectField({
+		label: "Logo"|t("cage"),
+		instructions: "The logo used in the age verification box above the form."|t("cage"),
+		tip: "Use your company's logo, if you have one!"|t("cage"),
+		id: "logo",
+		name: "logo",
+		elementType: "craft\\elements\\Asset",
+		viewMode: "large",
+		elements: [craft.assets.id(settings.logo).one()],
+		selectionLabel: "Select an image"|t("cage"),
+		limit: 1,
+		errors: settings.getErrors("logo"),
+		disabled: "logo" in overrides,
+		warning: "logo" in overrides ? configWarning("logo"),
+	}) }}
+
+	{{ forms.textField({
+		type: "number",
+		label: "Logo Max-Width"|t("cage"),
+		instructions: "Maximum Width of the logo in percent (%)."|t("cage"),
+		tip: "Change this if your logo appears too big/small on the age verification page! If it's too small, set this to a higher value. If it's too big, set this to a smaller value."|t("cage"),
+		id: "logoMaxWidth",
+		name: "logoMaxWidth",
+		min: 0,
+		max: 100,
+		step: 5,
+		size: 1,
+		value: settings.logoMaxWidth,
+		errors: settings.getErrors("logoMaxWidth"),
+		disabled: "logoMaxWidth" in overrides,
+		warning: "logoMaxWidth" in overrides ? configWarning("logoMaxWidth"),
+	}) }}
+
+	{{ customForms.simpleSelectField({
+		label: "Text Align"|t("cage"),
+		instructions: "The alignment of the text and logo in the age verification box."|t("cage"),
+		tip: "If you have a lot of text, it is better to have it right-aligned instead of centered. This is also useful for some oriental languages!"|t("cage"),
+		id: "textAlign",
+		name: "textAlign",
+		options: {
+			left: "Left",
+			center: "Center",
+			right: "Right"
+		},
+		required: true,
+		value: settings.textAlign,
+		errors: settings.getErrors("textAlign"),
+		disabled: "textAlign" in overrides,
+		warning: "textAlign" in overrides ? configWarning("textAlign"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Text Color"|t("cage"),
+		instructions: "The text color used for all text in the age verification box."|t("cage"),
+		tip: "The color used here should be in contrast to the age verification box background color. Otherwise it's very hard to read for some people!"|t("cage"),
+		id: "textColor",
+		name: "textColor",
+		value: settings.textColor,
+		required: true,
+		errors: settings.getErrors("textColor"),
+		disabled: "textColor" in overrides,
+		warning: "textColor" in overrides ? configWarning("textColor"),
+	}) }}
+
+	<hr>
+	<h1>Enter Button</h1>
+
+	{{ customForms.colorField({
+		label: "Enter Button Background Color"|t("cage"),
+		instructions: "The background color of the enter button."|t("cage"),
+		id: "enterButtonBackgroundColor",
+		name: "enterButtonBackgroundColor",
+		value: settings.enterButtonBackgroundColor,
+		required: true,
+		errors: settings.getErrors("enterButtonBackgroundColor"),
+		disabled: "enterButtonBackgroundColor" in overrides,
+		warning: "enterButtonBackgroundColor" in overrides ? configWarning("enterButtonBackgroundColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Enter Button Text Color"|t("cage"),
+		instructions: "The text color of the enter button."|t("cage"),
+		id: "enterButtonTextColor",
+		name: "enterButtonTextColor",
+		value: settings.enterButtonTextColor,
+		required: true,
+		errors: settings.getErrors("enterButtonTextColor"),
+		disabled: "enterButtonTextColor" in overrides,
+		warning: "enterButtonTextColor" in overrides ? configWarning("enterButtonTextColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Enter Button Border Color"|t("cage"),
+		instructions: "The border color of the enter button."|t("cage"),
+		tip: "Set to `rgba(0, 0, 0, 0)` if you don't want any border!"|t("cage"),
+		id: "enterButtonBorderColor",
+		name: "enterButtonBorderColor",
+		value: settings.enterButtonBorderColor,
+		required: true,
+		errors: settings.getErrors("enterButtonBorderColor"),
+		disabled: "enterButtonBorderColor" in overrides,
+		warning: "enterButtonBorderColor" in overrides ? configWarning("enterButtonBorderColor"),
+	}) }}
+
+	<hr>
+	<h1>Leave Button</h1>
+
+	{{ customForms.colorField({
+		label: "Leave Button Background Color"|t("cage"),
+		instructions: "The background color of the leave button."|t("cage"),
+		tip: "Make it clear, that this is the leave button, and not the primary enter button! This article could you out a bit: [uxplanet.org](https://uxplanet.org/primary-secondary-action-buttons-c16df9b36150)."|t("cage"),
+		id: "leaveButtonBackgroundColor",
+		name: "leaveButtonBackgroundColor",
+		value: settings.leaveButtonBackgroundColor,
+		required: true,
+		errors: settings.getErrors("leaveButtonBackgroundColor"),
+		disabled: "leaveButtonBackgroundColor" in overrides,
+		warning: "leaveButtonBackgroundColor" in overrides ? configWarning("leaveButtonBackgroundColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Leave Button Text Color"|t("cage"),
+		instructions: "The text color of the leave button."|t("cage"),
+		id: "leaveButtonTextColor",
+		name: "leaveButtonTextColor",
+		value: settings.leaveButtonTextColor,
+		required: true,
+		errors: settings.getErrors("leaveButtonTextColor"),
+		disabled: "leaveButtonTextColor" in overrides,
+		warning: "leaveButtonTextColor" in overrides ? configWarning("leaveButtonTextColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Leave Button Border Color"|t("cage"),
+		instructions: "The border color of the leave button."|t("cage"),
+		tip: "Set to `rgba(0, 0, 0, 0)` if you don't want any border!"|t("cage"),
+		id: "leaveButtonBorderColor",
+		name: "leaveButtonBorderColor",
+		value: settings.leaveButtonBorderColor,
+		required: true,
+		errors: settings.getErrors("leaveButtonBorderColor"),
+		disabled: "leaveButtonBorderColor" in overrides,
+		warning: "leaveButtonBorderColor" in overrides ? configWarning("leaveButtonBorderColor"),
+	}) }}
+
+	<hr>
+	<h1>Form Element</h1>
+
+	{{ customForms.colorField({
+		label: "Form Element Background Color"|t("cage"),
+		instructions: "The background color of drop-downs/input fields."|t("cage"),
+		id: "formElementBackgroundColor",
+		name: "formElementBackgroundColor",
+		value: settings.formElementBackgroundColor,
+		required: true,
+		errors: settings.getErrors("formElementBackgroundColor"),
+		disabled: "formElementBackgroundColor" in overrides,
+		warning: "formElementBackgroundColor" in overrides ? configWarning("formElementBackgroundColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Form Element Text Color"|t("cage"),
+		instructions: "The color of the text written/entered in drop-downs/input fields."|t("cage"),
+		id: "formElementTextColor",
+		name: "formElementTextColor",
+		value: settings.formElementTextColor,
+		required: true,
+		errors: settings.getErrors("formElementTextColor"),
+		disabled: "formElementTextColor" in overrides,
+		warning: "formElementTextColor" in overrides ? configWarning("formElementTextColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Form Element Border Color"|t("cage"),
+		instructions: "The border color of drop-downs/input fields."|t("cage"),
+		tip: "Same as before, you can set this to `rgba(0, 0, 0, 0)`, if you don't want any border, but I wouldn't recommend it because form elements almost always have a border!"|t("cage"),
+		id: "formElementBorderColor",
+		name: "formElementBorderColor",
+		value: settings.formElementBorderColor,
+		required: true,
+		errors: settings.getErrors("formElementBorderColor"),
+		disabled: "formElementBorderColor" in overrides,
+		warning: "formElementBorderColor" in overrides ? configWarning("formElementBorderColor"),
+	}) }}
+
+	{{ customForms.colorField({
+		label: "Form Element Placeholder Color"|t("cage"),
+		instructions: "The color of the placeholder in drop-downs/input fields."|t("cage"),
+		id: "formElementPlaceholderColor",
+		name: "formElementPlaceholderColor",
+		value: settings.formElementPlaceholderColor,
+		required: true,
+		errors: settings.getErrors("formElementPlaceholderColor"),
+		disabled: "formElementPlaceholderColor" in overrides,
+		warning: "formElementPlaceholderColor" in overrides ? configWarning("formElementPlaceholderColor"),
+	}) }}
+
+	<hr>
+	<h1>Fonts</h1>
+
+	{{ forms.textField({
+		type: "number",
+		label: "Message Font Size"|t("cage"),
+		instructions: 'Font Size of the "Message" or "Headline" of the age verification box (in px).'|t("cage"),
+		id: "messageFontSize",
+		name: "messageFontSize",
+		min: 1,
+		max: 100,
+		required: true,
+		size: 1,
+		value: settings.messageFontSize,
+		errors: settings.getErrors("messageFontSize"),
+		disabled: "messageFontSize" in overrides,
+		warning: "messageFontSize" in overrides ? configWarning("messageFontSize"),
+	}) }}
+
+	{{ forms.textField({
+		type: "number",
+		label: "Caption Font Size"|t("cage"),
+		instructions: 'Font Size of the "Caption" or "Sub-Headline" of the age verification box (in px).'|t("cage"),
+		id: "captionFontSize",
+		name: "captionFontSize",
+		min: 1,
+		max: 100,
+		required: true,
+		size: 1,
+		value: settings.captionFontSize,
+		errors: settings.getErrors("captionFontSize"),
+		disabled: "captionFontSize" in overrides,
+		warning: "captionFontSize" in overrides ? configWarning("captionFontSize"),
+	}) }}
+
+	{{ forms.textField({
+		type: "number",
+		label: "Additional Info Font Size"|t("cage"),
+		instructions: "Font Size of the additional info displayed below the age verification form (in px)."|t("cage"),
+		id: "additionalInfoFontSize",
+		name: "additionalInfoFontSize",
+		min: 1,
+		max: 100,
+		required: true,
+		size: 1,
+		value: settings.additionalInfoFontSize,
+		errors: settings.getErrors("additionalInfoFontSize"),
+		disabled: "additionalInfoFontSize" in overrides,
+		warning: "additionalInfoFontSize" in overrides ? configWarning("additionalInfoFontSize"),
+	}) }}
+
+	<hr>
+	<h1>Advanced</h1>
+
+	{{ forms.autosuggestField({
+		label: "Custom CSS File"|t("cage"),
+		instructions: "Enter the path to your CSS file, if you want to use some custom CSS rules on the age verification page."|t("cage"),
+		id: "customCssFile",
+		name: "customCssFile",
+		suggestEnvVars: true,
+		suggestAliases: true,
+		value: settings.customCssFile,
+		errors: settings.getErrors("customCssFile"),
+		disabled: "customCssFile" in overrides,
+		warning: "customCssFile" in overrides ? configWarning("customCssFile")
+	}) }}
+
+	<hr>
+
+{% endblock %}

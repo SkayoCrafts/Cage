@@ -79,5 +79,6 @@ class AgeVerificationService extends Component {
 		$session->set('cage_requiredAge', $age);
 
 		$response->redirect(UrlHelper::siteUrl('/' . $settings->ageVerificationPath, ['from' => urlencode($request->getUrl())]));
+		Craft::$app->end();
 	}
 }

@@ -100,7 +100,7 @@ class Cage extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public $minVersionRequired = '3.0.0';
+	public $minVersionRequired = '3.1.0';
 
 	// Public Methods
 	// =========================================================================

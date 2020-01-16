@@ -83,7 +83,7 @@ class AgeVerificationController extends Controller {
 
 		// Check logged in setting
 		if ($settings->ignoreLoggedIn && Craft::$app->getUser()
-		                                            ->getIdentity() === null) {
+		                                            ->getIdentity() !== null) {
 			return $response->redirect($referer);
 		}
 
@@ -137,7 +137,9 @@ class AgeVerificationController extends Controller {
 					}
 
 					if ($yearValid) {
-						$age = date('Y') - $year;
+						$birthDate = new DateTime($year . '-01-01');
+						$today = new DateTime('today');
+						$age = $birthDate->diff($today)->y;
 
 						if ($age >= $requiredAge) {
 							$userAge = $age;

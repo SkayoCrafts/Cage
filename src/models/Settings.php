@@ -195,7 +195,7 @@ class Settings extends Model {
 	 *
 	 * @var string An RGB color
 	 */
-	public $backgroundColor = "rgba(0, 0, 0, 0.6)";
+	public $backgroundColor = "rgba(0, 0, 0, 0.9)";
 
 	/**
 	 * The background image of the age verification page
@@ -258,14 +258,14 @@ class Settings extends Model {
 	 *
 	 * @var string An RGB color
 	 */
-	public $textColor = 'rgb(0, 0, 0)';
+	public $textColor = 'rgb(42, 42, 42)';
 
 	/**
 	 * The background color of the enter button
 	 *
 	 * @var string An RGB color
 	 */
-	public $enterButtonBackgroundColor = 'rgb(221, 151, 0)';
+	public $enterButtonBackgroundColor = 'rgb(0, 81, 255)';
 
 	/**
 	 * The text color of the enter button
@@ -293,14 +293,14 @@ class Settings extends Model {
 	 *
 	 * @var string An RGB color
 	 */
-	public $leaveButtonTextColor = 'rgb(0, 0, 0)';
+	public $leaveButtonTextColor = 'rgb(0, 81, 255)';
 
 	/**
 	 * The border color of the leave button
 	 *
 	 * @var string An RGB color
 	 */
-	public $leaveButtonBorderColor = 'rgba(0, 0, 0, 0.4)';
+	public $leaveButtonBorderColor = 'rgb(0, 81, 255)';
 
 	/**
 	 * The background color of drop-downs/input fields

@@ -122,7 +122,6 @@ class SettingsController extends Controller {
 		                        ->getConfigFromFile(strtolower(Cage::$plugin->handle));
 
 		$variables['overrides'] = array_keys($overrides);
-
 		/*  */
 
 		return $this->renderTemplate("cage/settings/$settingsSection", $variables);

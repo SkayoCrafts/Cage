@@ -1,6 +1,7 @@
 {
     "name": "skayocrafts/cage",
     "description": "An Age-Verification-Gate Plugin for Craft CMS",
+	"homepage": "https://skayocrafts.github.io/cage",
     "type": "craft-plugin",
     "version": "1.0.2",
     "keywords": [

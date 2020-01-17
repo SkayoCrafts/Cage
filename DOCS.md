@@ -24,7 +24,9 @@ Then tell Composer to load the plugin:
 
     composer require skayocrafts/cage
 
-In the Control Panel, go to *Settings* → *Plugins* and click the *Install* button for **Cage**.
+Then tell Craft to install the plugin:
+
+    ./craft install/plugin feed-me
 
 ## Usage
 

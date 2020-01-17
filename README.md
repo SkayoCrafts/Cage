@@ -13,10 +13,13 @@
 ## Overview
 
 This plugin provides a simple way to add an age-verification-gate to your website, where the user has to verify their age.  
-This happens on a nice looking page that you can customize however you want!  
-The plugin also features a lot of different ways the user can verify their age.  
+It allows site administrators to have age-restricted sections on the website, where only adults can enter.  
+All this happens on a nice looking page which you can customize **a lot**! (You can even have some custom CSS)  
+
+The plugin also features a lot of different ways the user can verify their age:  
 Drop-Downs? Input Fields? Just some buttons? This plugin has everything.  
-If you have adult-content, or content that is not intended to be seen by minors, this is the best and only plugin on the market right now!  
+
+If you have adult-content, or content that is not intended to be seen by minors, this is probably the best and only plugin on the market right now!  
 Just download and enjoy! :wink:
 
 ## Documentation

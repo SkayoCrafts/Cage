@@ -49,8 +49,9 @@ Some things to do, and ideas for potential features:
 - [ ] Better Logging
 - [ ] Custom Error Messages
 
-Brought to you by [Skayo](https://skayo.github.io)
-
 ## License
 
 ### [Proprietary](https://github.com/SkayoCrafts/Cage/blob/master/LICENSE.md)
+
+---
+Brought to you by [Skayo](https://skayo.github.io)

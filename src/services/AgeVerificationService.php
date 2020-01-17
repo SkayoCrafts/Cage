@@ -39,6 +39,7 @@ class AgeVerificationService extends Component {
 	 * @throws \craft\errors\MissingComponentException
 	 * @throws \yii\base\Exception
 	 * @throws \yii\base\InvalidConfigException
+	 * @throws \yii\base\ExitException
 	 */
 	public function requireAge ($age = null) {
 		Craft::info(
@@ -57,6 +58,11 @@ class AgeVerificationService extends Component {
 
 		if ($age === null)
 			$age = $settings->defaultAge;
+
+		// Check enabled setting
+		if (!$settings->enabled) {
+			return;
+		}
 
 		// Only do this for real site requests
 		if ($request->getIsConsoleRequest() || $request->getIsLivePreview()) {

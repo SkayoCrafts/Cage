@@ -6,7 +6,7 @@ An Age-Verification-Gate Plugin for Craft CMS
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+This plugin requires Craft CMS v3.1.0 (may also be working with v3.0.0) or later.
 
 ## Installation
 

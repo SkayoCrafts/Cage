@@ -34,6 +34,18 @@
 		warning: "pluginName" in overrides ? configWarning("pluginName"),
 	}) }}
 
+	{{ forms.lightswitchField({
+		label: "Enabled"|t("cage"),
+		instructions: "Whether this plugin should be enabled or not."|t("cage"),
+		tip: "This is useful for multi-environment scenarios!"|t("cage"),
+		id: "enabled",
+		name: "enabled",
+		on: settings.enabled,
+		errors: settings.getErrors("enabled"),
+		disabled: "enabled" in overrides,
+		warning: "enabled" in overrides ? configWarning("enabled"),
+	}) }}
+
 	<hr>
 
 	{{ forms.selectField({

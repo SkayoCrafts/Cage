@@ -38,6 +38,7 @@ use yii\web\Cookie;
  * @package   Cage
  * @since     1.0.0
  *
+ *
  */
 class AgeVerificationController extends Controller {
 
@@ -75,9 +76,15 @@ class AgeVerificationController extends Controller {
 
 		$referer = urldecode($request->getQueryParam('from', '/'));
 
-		// Redirect if required age is unset
-		if (!$session->has('cage_requiredAge'))
+		// Check enabled setting
+		if (!$settings->enabled) {
 			return $response->redirect($referer);
+		}
+
+		// Redirect if required age is unset
+		if (!$session->has('cage_requiredAge')) {
+			return $response->redirect($referer);
+		}
 
 		$requiredAge = $session->get('cage_requiredAge', $settings->defaultAge);
 

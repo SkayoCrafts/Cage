@@ -35,6 +35,13 @@ return [
 	'pluginName' => 'Cage',
 
 	/**
+	 * Whether this plugin should be enabled or not
+	 *
+	 * @var bool True or False
+	 */
+	'enabled' => true,
+
+	/**
 	 * The default minimum age required to view content
 	 *
 	 * @var int An integer

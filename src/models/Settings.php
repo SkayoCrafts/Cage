@@ -45,6 +45,13 @@ class Settings extends Model {
 	public $pluginName = 'Cage';
 
 	/**
+	 * Whether this plugin should be enabled or not
+	 *
+	 * @var bool True or False
+	 */
+	public $enabled = true;
+
+	/**
 	 * The default minimum age required to view content
 	 *
 	 * @var int An integer
@@ -460,7 +467,7 @@ class Settings extends Model {
 				'integer',
 				'min' => 0,
 			],
-			[['ignoreLoggedIn', 'showTryAgain'], 'boolean'],
+			[['enabled', 'ignoreLoggedIn', 'showTryAgain'], 'boolean'],
 
 			// Misc Rules
 			['failureRedirectLink', 'url', 'defaultScheme' => 'http'],
@@ -495,6 +502,7 @@ class Settings extends Model {
 	public function attributeLabels () {
 		return [
 			'pluginName'            => Craft::t('cage', 'Plugin Name'),
+			'enabled'               => Craft::t('cage', 'Enabled'),
 			'ageVerificationMethod' => Craft::t('cage', 'Age Verification Method'),
 			'defaultAge'            => Craft::t('cage', 'Default Age'),
 			'ageVerificationPath'   => Craft::t('cage', 'Age Verification URL Path'),

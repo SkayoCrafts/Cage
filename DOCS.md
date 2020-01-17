@@ -2,11 +2,11 @@
 
 ## Requirements
 
-### Craft CMS
+#### Craft CMS
 
 Cage requires Craft CMS 3.0 or greater.
 
-### PHP
+#### PHP
 
 Cage requires PHP 7.0 or greater.
 
@@ -14,11 +14,11 @@ Cage requires PHP 7.0 or greater.
 
 You can install Cage via the Craft Plugin Store, or through Composer.
 
-### Craft Plugin Store
+#### Craft Plugin Store
 
 To install **Cage**, navigate to the *Plugin Store* section of your Craft control panel, search for `Cage`, and click the *Install* button.
 
-### Composer
+#### Composer
 
 You can also add the package to your project using Composer.
 
@@ -66,7 +66,7 @@ You can play around a lot with different styles and layouts, just find out what 
 
 You can find the plugin settings in the Control Panel, at *Settings* → *Cage*.
 
-### Config File
+#### Config File
 
 If you want to use a config file, instead of directly changing the settings in the control panel, copy the `src/config.php` file to `/path/to/project/config` as `cage.php` and make your changes there to override the default settings.  
 

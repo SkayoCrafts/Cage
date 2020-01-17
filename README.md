@@ -21,7 +21,12 @@ Just download and enjoy! :wink:
 
 ## Screenshots
 
-![Screenshot](resources/screenshots/plugin-logo.png)
+![Screenshot 1](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot1.png)
+![Screenshot 2](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot2.png)
+![Screenshot 3](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot3.png)
+![Screenshot 4](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot4.png)
+![Screenshot 5](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot5.png)
+![Screenshot 6](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot6.png)
 
 ## Requirements
 

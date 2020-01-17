@@ -2,7 +2,13 @@
 
 ## Requirements
 
-This plugin requires Craft CMS v3.1.0 (may also be working with v3.0.0) or later.
+### Craft CMS
+
+Cage requires Craft CMS 3.0 or greater.
+
+### PHP
+
+Cage requires PHP 7.0 or greater.
 
 ## Installation
 

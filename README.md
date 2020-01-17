@@ -19,22 +19,23 @@ Drop-Downs? Input Fields? Just some buttons? This plugin has everything.
 If you have adult-content, or content that is not intended to be seen by minors, this is the best and only plugin on the market right now!  
 Just download and enjoy! :wink:
 
+## Documentation
+
+### [Click here](https://skayocrafts.github.io/cage/docs)
+
 ## Screenshots
 
 ![Screenshot 1](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot1.png)
+
 ![Screenshot 2](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot2.png)
+
 ![Screenshot 3](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot3.png)
+
 ![Screenshot 4](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot4.png)
+
 ![Screenshot 5](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot5.png)
+
 ![Screenshot 6](https://github.com/SkayoCrafts/Cage/raw/master/resources/screenshots/Screenshot6.png)
-
-## Requirements
-
-This plugin requires Craft CMS v3.1.0 (may also be working with v3.0.0) or later.
-
-## Documentatiom
-
-### [Click here](https://skayocrafts.github.io/cage/docs)
 
 ## Credits
 

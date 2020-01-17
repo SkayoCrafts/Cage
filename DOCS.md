@@ -58,5 +58,5 @@ You can find the plugin settings in the Control Panel, at *Settings* → *Cage*.
 
 If you want to use a config file, instead of directly changing the settings in the control panel, copy the `src/config.php` file to `/path/to/project/config` as `cage.php` and make your changes there to override the default settings.  
 
-Once copied to `/path/to/project/config`, this file will be multi-environment aware as well, so you can have different settings groups for each environment, just as you do for `general.php`.
+Once copied to `/path/to/project/config/cage.php`, this file will be multi-environment aware as well, so you can have different settings groups for each environment, just as you do for `general.php`.
 

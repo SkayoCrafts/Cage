@@ -38,6 +38,8 @@ To install the plugin, follow these instructions.
 
 Some things to do, and ideas for potential features:
 
-* Release it
+- [ ] Live Preview
+- [ ] Better Logging
+- [ ] Custom Error Messages
 
 Brought to you by [Skayo](https://skayo.github.io)

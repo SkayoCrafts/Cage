@@ -1,5 +1,9 @@
 # Cage Documentation
 
+## Requirements
+
+This plugin requires Craft CMS v3.1.0 (may also be working with v3.0.0) or later.
+
 ## Installation
 
 You can install Cage via the Craft Plugin Store, or through Composer.

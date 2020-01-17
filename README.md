@@ -2,39 +2,21 @@
 
 An Age-Verification-Gate Plugin for Craft CMS
 
+## Overview
+
+## Screenshots
+
 ![Screenshot](resources/img/plugin-logo.png)
 
 ## Requirements
 
 This plugin requires Craft CMS v3.1.0 (may also be working with v3.0.0) or later.
 
-## Installation
+## Documentatiom
 
-To install the plugin, follow these instructions.
+#### [Click here](https://skayocrafts.github.io/cage/docs)
 
-1. Open your terminal and go to your Craft project:
-
-        cd /path/to/project
-
-2. Then tell Composer to load the plugin:
-
-        composer require SkayoCrafts/cage
-
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Cage.
-
-## Cage Overview
-
--Insert text here-
-
-## Configuring Cage
-
--Insert text here-
-
-## Using Cage
-
--Insert text here-
-
-## Cage Roadmap
+## Roadmap
 
 Some things to do, and ideas for potential features:
 

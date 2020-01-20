@@ -32,7 +32,7 @@ Then tell Composer to load the plugin:
 
 Then tell Craft to install the plugin:
 
-    ./craft install/plugin feed-me
+    ./craft install/plugin cage
 
 ## Usage
 

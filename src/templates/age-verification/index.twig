@@ -51,7 +51,7 @@
 							<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
 						{% endif %}
 
-						{% for year in now.year..1900 %}
+						{% for year in now|date('Y')..1900 %}
 							<option value="{{ year }}">{{ year }}</option>
 						{% endfor %}
 					</select>
@@ -82,7 +82,7 @@
 							<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
 						{% endif %}
 
-						{% for year in now.year..1900 %}
+						{% for year in now|date('Y')..1900 %}
 							<option value="{{ year }}">{{ year }}</option>
 						{% endfor %}
 					</select>
@@ -94,7 +94,7 @@
 						<option disabled selected value="">{{ settings.yearPlaceholder|replace({'{age}': requiredAge}) }}</option>
 					{% endif %}
 
-					{% for year in now.year..1900 %}
+					{% for year in now|date('Y')..1900 %}
 						<option value="{{ year }}">{{ year }}</option>
 					{% endfor %}
 				</select>

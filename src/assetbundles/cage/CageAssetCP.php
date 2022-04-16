@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2019 Skayo
  */
 
-namespace skayocrafts\cage\assetbundles\Cage;
+namespace skayocrafts\cage\assetbundles\cage;
 
 use Craft;
 use craft\web\AssetBundle;
